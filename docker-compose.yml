@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  simulator:
+    container_name: simulator
+    platform: linux/amd64
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - .:/App
+    
+  db:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=RandomPassword
+    ports:
+      - '5432:5432'
